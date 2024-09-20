@@ -30,7 +30,7 @@ export default function App() {
   const getMovieById = async () => {
     try {
       const randomTT = `http://www.omdbapi.com/?apikey=${apiKey}&i=tt${pad(Math.floor(Math.random() * 9999999), 7)}`
-      
+
       console.log(randomTT)
       const response = await fetch(
         randomTT
@@ -39,6 +39,12 @@ export default function App() {
       if (data.Response === 'False') {
         console.log('call again')
         getMovieById()
+        return
+      }
+      console.log(data)
+      if(!data.Poster.includes("http")){
+        getMovieById()
+        return
       }
       setMovie(data);
     } catch (e) {
